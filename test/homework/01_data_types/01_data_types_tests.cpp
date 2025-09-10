@@ -23,13 +23,11 @@ TEST_CASE("Verify multiply_numbers function")
 	REQUIRE(multiply_numbers(-753, 0) == 0);
 	REQUIRE(multiply_numbers(0, -753) == 0);
 
-	// Negative numbers
+	// Identity property (multiply by 1)
 	REQUIRE(multiply_numbers(-1, -753) == 753);
 	REQUIRE(multiply_numbers(-753, -1) == 753);
 	REQUIRE(multiply_numbers(-1, 753) == -753);
 	REQUIRE(multiply_numbers(753, -1) == -753);
-
-	// Identity property (multiply by 1)
 	REQUIRE(multiply_numbers(753, 1) == 753);
 	REQUIRE(multiply_numbers(1, 753) == 753);
 	REQUIRE(multiply_numbers(-753, 1) == -753);
