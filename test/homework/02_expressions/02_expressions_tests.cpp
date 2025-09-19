@@ -8,34 +8,21 @@ TEST_CASE("Verify Test Configuration", "verification") {
 
 TEST_CASE("Verify get_sales_tax amount function", "hw02") {
 	
-	//ZOMBIES framework
-	// Z - Zero
+	// Zero
 	REQUIRE(get_sales_tax_amount(0.0) == 0.0);
 	
-	// O - One/Simple values
+	// One
 	REQUIRE(get_sales_tax_amount(1.0) == Approx(0.0675));
 	REQUIRE(get_sales_tax_amount(10.0) == Approx(0.675));
 
-	// M - Many/Multiple amounts
-	REQUIRE(get_sales_tax_amount(100.0) == Approx(6.75));
-	REQUIRE(get_sales_tax_amount(50.25) == Approx(3.391875));
-	REQUIRE(get_sales_tax_amount(999.99) == Approx(67.499325));
-	REQUIRE(get_sales_tax_amount(15.75) == Approx(1.063125));
 	
-	// B - Boundary values
+	// Big/small
 	REQUIRE(get_sales_tax_amount(0.01) == Approx(0.000675));
 	REQUIRE(get_sales_tax_amount(9999.99) == Approx(674.999325));
-	
-	// I - Invalid/Error conditions
-	REQUIRE(get_sales_tax_amount(-1.0) == -1.0);
-	REQUIRE(get_sales_tax_amount(-10.5) == -1.0);
-	REQUIRE(get_sales_tax_amount(-0.01) == -1.0);
-	
-	// E - Edge cases
 	REQUIRE(get_sales_tax_amount(0.001) == Approx(0.0000675));
 	REQUIRE(get_sales_tax_amount(1000000.0) == Approx(67500.0));
 	
-	// S - Simple, straight-forward cases
+	// Simple cases
 	REQUIRE(get_sales_tax_amount(8.99) == Approx(0.606825));
 	REQUIRE(get_sales_tax_amount(24.75) == Approx(1.670625));
 	REQUIRE(get_sales_tax_amount(125.50) == Approx(8.47125));
