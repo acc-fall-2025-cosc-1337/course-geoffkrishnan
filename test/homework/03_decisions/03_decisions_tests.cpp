@@ -6,7 +6,7 @@ TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
 }
 
-TEST_CASE("Test get_letter_grade_using_if", "if_function") {
+TEST_CASE("Test get_letter_grade_using_if", "hw03") {
 	REQUIRE(get_letter_grade_using_if(95) == 'A');
 	REQUIRE(get_letter_grade_using_if(85) == 'B');
 	REQUIRE(get_letter_grade_using_if(75) == 'C');
@@ -14,7 +14,7 @@ TEST_CASE("Test get_letter_grade_using_if", "if_function") {
 	REQUIRE(get_letter_grade_using_if(50) == 'F');
 }
 
-TEST_CASE("Test get_letter_grade_using_switch", "switch_function") {
+TEST_CASE("Test get_letter_grade_using_switch", "hw03") {
 	REQUIRE(get_letter_grade_using_switch(95) == 'A');
 	REQUIRE(get_letter_grade_using_switch(85) == 'B');
 	REQUIRE(get_letter_grade_using_switch(75) == 'C');
