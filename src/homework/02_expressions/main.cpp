@@ -5,7 +5,6 @@
 using std::cout;
 using std::cin;
 using std::endl;
-
 using std::setprecision;
 using std::setw;
 using std::fixed;

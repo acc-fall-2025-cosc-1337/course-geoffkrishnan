@@ -8,7 +8,7 @@ double get_sales_tax_amount(double meal_amount) {
 		return -1;
 	}
 	return meal_amount * tax_rate;
-};
+}
 
 //Function get_tip_amount has two double parameters meal_amount and tip_rate and returns the product of meal_amount and tip_rate.
 double get_tip_amount(double meal_amount, double tip_rate) {
@@ -16,5 +16,5 @@ double get_tip_amount(double meal_amount, double tip_rate) {
 		return -1;
 	}
 	return meal_amount * tip_rate;
-};
+}
 
