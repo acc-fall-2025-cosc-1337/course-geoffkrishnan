@@ -18,7 +18,7 @@ int get_factorial(int num) {
     }
 
     return result;
-};
+}
 
 int sum_odd_numbers(int num) {
     int curr_odd = 1, result = 0;
@@ -30,5 +30,5 @@ int sum_odd_numbers(int num) {
     }
 
     return result;
-};
+}
 
