@@ -1,5 +1,3 @@
-//add include statements
+int get_factorial(int num);
 
-/*
-Write prototype for function(s)
-*/
+int sum_odd_numbers(int num);
