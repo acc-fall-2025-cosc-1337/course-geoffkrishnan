@@ -1,12 +1,17 @@
 #include <iostream>
+#include <vector>
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 
 using std::cout;
 using std::cin;
 using std::string;
+using std::vector;
 
 int main() {
 	TicTacToe tic_tac_toe;
+	TicTacToeManager manager;
+	vector<TicTacToe> all_games;
 	string user_input = "";
 
 	do {
@@ -22,6 +27,7 @@ int main() {
 		} while(first_player != "X" && first_player != "O");
 
 		tic_tac_toe.start_game(first_player);
+		tic_tac_toe.display_board();
 
 		while(!tic_tac_toe.game_over()) {
 			auto position = 0;
@@ -61,12 +67,41 @@ int main() {
 			cout << "Winner is: " << tic_tac_toe.get_winner() << "\n";
 		}
 
+		manager.save_game(tic_tac_toe);
+		all_games.push_back(tic_tac_toe);
+
+		int x_wins = 0, o_wins = 0, ties = 0;
+		manager.get_winner_total(x_wins, o_wins, ties);
+		cout << "X wins: "  << x_wins << "\n";
+		cout << "O wins: " << o_wins << "\n";
+		cout << "Ties: " << ties << "\n";
+
 		cout << "Play again? (y/n or q to quit): ";
 		cin >> user_input;
 
 	} while(user_input != "n" && user_input != "q");
 
-	cout << "Thanks for playing!\n";
+	cout << "\n=== GAME HISTORY ===\n";
+	for(int i = 0; i < all_games.size(); i++) {
+		cout << "\nGame " << (i + 1) << " - Winner: ";
+		if(all_games[i].get_winner() == "C") {
+			cout << "Tie\n";
+		}
+		else {
+			cout << all_games[i].get_winner() << "\n";
+		}
+		cout << "Final Board:\n";
+		all_games[i].display_board();
+	}
+
+	cout << "\n=== FINAL RESULTS ===\n";
+	int x_wins = 0, o_wins = 0, ties = 0;
+	manager.get_winner_total(x_wins, o_wins, ties);
+	cout << "X wins: " << x_wins << "\n";
+	cout << "O wins: " << o_wins << "\n";
+	cout << "Ties: " << ties << "\n";
+
+	cout << "\nThanks for playing!\n";
 
 	return 0;
 }
