@@ -21,12 +21,12 @@ class TicTacToe {
 
     private:
         void set_next_player();
-        bool check_board_full();
+        void set_winner();
         void clear_board();
+        bool check_board_full();
         bool check_column_win();
         bool check_row_win();
         bool check_diagonal_win();
-        void set_winner();
 
         string player{};
         string winner{};
