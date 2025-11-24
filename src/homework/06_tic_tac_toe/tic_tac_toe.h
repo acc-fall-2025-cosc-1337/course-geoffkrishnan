@@ -10,6 +10,9 @@ using std::vector;
 
 class TicTacToe {
     public:
+        TicTacToe(int size) : pegs(size * size, " ") {}
+        virtual ~TicTacToe() = default;
+
         bool game_over();
         void start_game(string firstPlayer);
         void mark_board(int position);
@@ -19,18 +22,19 @@ class TicTacToe {
         string get_player() const {return player;}
         string get_winner() const {return winner;}
 
-    private:
+    protected:
+        vector<string> pegs;
         void set_next_player();
         void set_winner();
         void clear_board();
         bool check_board_full();
-        bool check_column_win();
-        bool check_row_win();
-        bool check_diagonal_win();
+        virtual bool check_column_win() = 0;
+        virtual bool check_row_win() = 0;
+        virtual bool check_diagonal_win() = 0;
 
+    private:
         string player{};
         string winner{};
-        vector<string> pegs{9, " "};
 };
 
 #endif
