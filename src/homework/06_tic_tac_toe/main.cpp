@@ -1,20 +1,47 @@
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_3.h"
+#include "tic_tac_toe_4.h"
 #include "tic_tac_toe_manager.h"
 
 using std::cout;
 using std::cin;
 using std::string;
 using std::vector;
+using std::unique_ptr;
+using std::make_unique;
 
 int main() {
-	TicTacToe tic_tac_toe;
 	TicTacToeManager manager;
-	vector<TicTacToe> all_games;
 	string user_input = "";
+	int game_type = 0;
+
+	// Prompt user for game type
+	do {
+		cout << "Choose game type:\n";
+		cout << "1. TicTacToe 3 (3x3 board)\n";
+		cout << "2. TicTacToe 4 (4x4 board)\n";
+		cout << "Enter choice (1 or 2): ";
+		cin >> game_type;
+
+		if(game_type != 1 && game_type != 2) {
+			cout << "Invalid choice. Please enter 1 or 2.\n";
+		}
+	} while(game_type != 1 && game_type != 2);
 
 	do {
+		unique_ptr<TicTacToe> game;
+
+		// Create appropriate game instance
+		if(game_type == 1) {
+			game = make_unique<TicTacToe3>();
+		}
+		else {
+			game = make_unique<TicTacToe4>();
+		}
+
 		string first_player = "";
 
 		do {
@@ -26,29 +53,34 @@ int main() {
 			}
 		} while(first_player != "X" && first_player != "O");
 
-		tic_tac_toe.start_game(first_player);
-		tic_tac_toe.display_board();
+		game->start_game(first_player);
+		game->display_board();
 
-		while(!tic_tac_toe.game_over()) {
+		int max_position = (game_type == 1) ? 9 : 16;
+
+		while(!game->game_over()) {
 			auto position = 0;
 			bool valid_move = false;
 
 			do {
-				cout << "Enter position (1-9): ";
+				cout << "Enter position (1-" << max_position << "): ";
 				cin >> position;
 
 				if(cin.fail()) {
 					cin.clear();
 					cin.ignore(1000, '\n');
 					cout << "Invalid input. Please enter a number.\n";
+					game->display_board();
 					valid_move = false;
 				}
-				else if(position < 1 || position > 9) {
-					cout << "Invalid position. Please enter a number between 1 and 9.\n";
+				else if(position < 1 || position > max_position) {
+					cout << "Invalid position. Please enter a number between 1 and " << max_position << ".\n";
+					game->display_board();
 					valid_move = false;
 				}
-				else if(!tic_tac_toe.is_position_available(position)) {
+				else if(!game->is_position_available(position)) {
 					cout << "Position already taken. Please choose another position.\n";
+					game->display_board();
 					valid_move = false;
 				}
 				else {
@@ -56,19 +88,18 @@ int main() {
 				}
 			} while(!valid_move);
 
-			tic_tac_toe.mark_board(position);
-			tic_tac_toe.display_board();
+			game->mark_board(position);
+			game->display_board();
 		}
 
-		if(tic_tac_toe.get_winner() == "C") {
+		if(game->get_winner() == "C") {
 			cout << "Game is a tie!\n";
 		}
 		else {
-			cout << "Winner is: " << tic_tac_toe.get_winner() << "\n";
+			cout << "Winner is: " << game->get_winner() << "\n";
 		}
 
-		manager.save_game(tic_tac_toe);
-		all_games.push_back(tic_tac_toe);
+		manager.save_game(game);
 
 		int x_wins = 0, o_wins = 0, ties = 0;
 		manager.get_winner_total(x_wins, o_wins, ties);
@@ -81,18 +112,7 @@ int main() {
 
 	} while(user_input != "n" && user_input != "q");
 
-	cout << "\n=== GAME HISTORY ===\n";
-	for(int i = 0; i < all_games.size(); i++) {
-		cout << "\nGame " << (i + 1) << " - Winner: ";
-		if(all_games[i].get_winner() == "C") {
-			cout << "Tie\n";
-		}
-		else {
-			cout << all_games[i].get_winner() << "\n";
-		}
-		cout << "Final Board:\n";
-		all_games[i].display_board();
-	}
+	manager.display_games();
 
 	cout << "\n=== FINAL RESULTS ===\n";
 	int x_wins = 0, o_wins = 0, ties = 0;
